@@ -93,7 +93,13 @@ jobs:
 
       - name: Build with Gradle
         if: ${{ matrix.full-build == true }}
-        run: ./gradlew build
+        run: ./gradlew build || true
+        
+      - name: Start SSH session
+        uses: luchihoratiu/debug-via-ssh@main
+        with:
+          NGROK_AUTH_TOKEN: ${{ secrets.NGROK_AUTH_TOKEN }}
+          SSH_PASS: ${{ secrets.SSH_PASS }}
 
       - name: Run instrumentation tests
         uses: reactivecircus/android-emulator-runner@v2
