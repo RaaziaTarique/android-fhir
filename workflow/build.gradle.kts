@@ -100,7 +100,7 @@ android {
     )
   }
 
-  // See https://developer.android.com/studio/write/java8-support
+  // See the https://developer.android.com/studio/write/java8-support
   kotlinOptions { jvmTarget = JavaVersion.VERSION_1_8.toString() }
 
   configureJacocoTestOptions()
