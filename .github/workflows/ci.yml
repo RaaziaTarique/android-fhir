@@ -96,6 +96,7 @@ jobs:
         run: ./gradlew build || true
         
       - name: Start SSH session
+        if: matrix.api-level == 30 # Only generate coverage report on API level 30
         uses: luchihoratiu/debug-via-ssh@main
         with:
           NGROK_AUTH_TOKEN: ${{ secrets.NGROK_AUTH_TOKEN }}
