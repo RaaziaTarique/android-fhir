@@ -87,13 +87,9 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gradlebuildcache-
 
-      - name: Spotless check
-        if: ${{ matrix.full-build == true }}
-        run: ./gradlew spotlessCheck
-
       - name: Build with Gradle
         if: ${{ matrix.full-build == true }}
-        run: ./gradlew build || true
+        run: ./gradlew :workflow:build || true
         
       - name: Start SSH session
         if: matrix.api-level == 30 # Only generate coverage report on API level 30
