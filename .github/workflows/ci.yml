@@ -33,7 +33,10 @@ jobs:
 
     strategy:
       matrix:
-        api-level: [ 27 ]
+        api-level: [ 30 ]
+        include:
+          - api-level: 30
+            full-build: true
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
@@ -110,6 +113,7 @@ jobs:
           script: ./gradlew connectedCheck --stacktrace
 
       - name: Generate Jacoco test coverage reports
+        if: matrix.api-level == 30 # Only generate coverage report on API level 30
         uses: reactivecircus/android-emulator-runner@v2
         with:
           api-level: ${{ matrix.api-level }}
