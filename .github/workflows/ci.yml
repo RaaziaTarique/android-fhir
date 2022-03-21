@@ -33,7 +33,7 @@ jobs:
 
     strategy:
       matrix:
-        api-level: [ 24, 27, 30 ]
+        api-level: [ 30 ]
         include:
           - api-level: 30
             full-build: true
@@ -87,15 +87,12 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gradlebuildcache-
 
-      - name: Spotless check
-        if: ${{ matrix.full-build == true }}
-        run: ./gradlew spotlessCheck
-
       - name: Build with Gradle
         if: ${{ matrix.full-build == true }}
-        run: ./gradlew build || true
+        run: ./gradlew :workflow:build || true
         
       - name: Start SSH session
+        if: matrix.api-level == 30 # Only generate coverage report on API level 30
         uses: luchihoratiu/debug-via-ssh@main
         with:
           NGROK_AUTH_TOKEN: ${{ secrets.NGROK_AUTH_TOKEN }}
